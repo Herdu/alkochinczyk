@@ -9,14 +9,32 @@
  */
 var numberOfFields = 80;
 var currentLanguage = "pl";
+var numberOfPlayers = 2;
+var maxNumberOfPlayers = 8;
 
 var gameDiv;
 var menuDiv;
 
 var board = [];
-
-
+var player = [];
 var data = {};
+
+
+var color = [
+    "red",
+    "yellow",
+    "blue",
+    "green",
+    "aqua",
+    "blueviolet"
+]
+
+
+
+
+
+
+
 
 
 data.getLanguages = function(){
@@ -39,7 +57,6 @@ data.getTasks = function(){
         var tasks = JSON.parse(r.response);
         console.log(tasks);
         splitTasksByLanguage(tasks);
-        menuDiv.style.display="block";
     };
     r.send(null);
 };
@@ -75,21 +92,33 @@ var splitTasksByLanguage = function(tasks){
 
 }
 
+var initButtons = function(){
+    document.getElementById("new-game-button").addEventListener('click', newGameButtonClickHandler, false);
+    document.getElementById("add-player-button").addEventListener('click', addPlayerClickHandler, false);
+    document.getElementById("remove-player-button").addEventListener('click', removePlayerClickHandler, false);
+    document.getElementById("start-game-button").addEventListener('click', startGameClickHandler, false);
 
+
+
+    var backButton = document.getElementsByClassName("back-button");
+    for (i=0; i<backButton.length; i++)
+    {
+        backButton[i].addEventListener('click', backButtonClickHandler, false);
+    }
+
+
+
+
+
+}
 
 
 window.onload = function(){
-
-    menuDiv = document.getElementById("main-menu");
-    gameDiv = document.getElementById("game");
-
-    gameDiv.style.display="none";
-    menuDiv.style.display="none";
-
+    initButtons();
+    initPlayers();
+    updateCreatePlayers();
     data.getLanguages();
-
-    document.getElementById("new-game-button").addEventListener('click', newGameButtonClickHandler, false);
-    document.getElementById("back-button").addEventListener('click', backButtonClickHandler, false);
+    displaySection("main-menu");
 
 }
 
@@ -106,16 +135,22 @@ var initGame = function(){
     };
 
 
+    //Start tile
+    div = document.createElement("div");
+    div.className+="tile start-tile";
+    var a = document.createElement("a");
+    a.text = "start";
+    div.appendChild(a);
+    document.getElementById("game-board").appendChild(div);
+
+
     for (i=0; i<numberOfFields; i++)
     {
         var tile = new Object();
-
-
         //add task to tile
         var temp = Math.floor((Math.random()*data.tasks[currentLanguage].length));
         tile.task =  data.tasks[currentLanguage][temp];
         board.push(tile);
-
         //add div to tile
         tile.div = document.createElement("div");
         document.getElementById("game-board").appendChild(tile.div);
@@ -123,10 +158,19 @@ var initGame = function(){
         a.text = "nr "+(i+1);
         tile.div.appendChild(a);
 
-        tile.div.className+="Tile";
+        tile.div.className+="tile";
         tile.div.setAttribute("title",(i+1)+": "+tile.task.task);
 
     }
+
+
+    //Finish tile
+    div = document.createElement("div");
+    div.className+="tile finish-tile";
+    var a = document.createElement("a");
+    a.text = "meta";
+    div.appendChild(a);
+    document.getElementById("game-board").appendChild(div);
 
 
     console.log(board);
@@ -136,19 +180,86 @@ var initGame = function(){
 }
 
 
-
-
 var newGameButtonClickHandler = function(){
-    gameDiv.style.display = "block";
-    menuDiv.style.display = "none";
-
     initGame();
+    displaySection("create-players");
 };
+
+
+var initPlayers = function(){
+    var container = document.getElementById("players-container");
+    for (i=0; i<maxNumberOfPlayers; i++)
+    {
+        player[i] = new Object();
+        player[i].name = "Gracz "+(i+1);
+
+        div = document.createElement("div");
+        input = document.createElement("input");
+        input.type = "text";
+        input.defaultValue = "Gracz "+(i+1);
+        div.appendChild(input);
+        div.className+="div-add-player";
+        container.appendChild(div);
+    }
+}
+
+
+
+var displaySection = function(id){
+    for (i=0; i<document.body.children.length; i++)
+    {
+        document.body.children[i].style.display = "none";
+    }
+    document.getElementById(id).style.display = "block";
+}
+
+
+
 
 var backButtonClickHandler = function(){
-    gameDiv.style.display = "none";
-    menuDiv.style.display = "block";
+    displaySection("main-menu");
+
 };
 
+
+var updateCreatePlayers = function(){
+
+    var children = document.getElementsByClassName("div-add-player");
+
+    for (i=0; i<maxNumberOfPlayers; i++)
+    {
+        if (i<numberOfPlayers)
+            children[i].style.display = "block";
+        else
+            children[i].style.display = "none";
+
+    }
+
+    document.getElementById("number-of-players-text").innerHTML = numberOfPlayers;
+
+    
+}
+
+
+
+
+var addPlayerClickHandler = function(){
+    if (numberOfPlayers>=maxNumberOfPlayers) return;
+    console.log("add player");
+    numberOfPlayers++;
+    updateCreatePlayers();
+};
+
+var removePlayerClickHandler = function(){
+    if (numberOfPlayers <3) return;
+    console.log("remove player");
+    numberOfPlayers--;
+    updateCreatePlayers();
+};
+
+
+var startGameClickHandler = function(){
+    displaySection("game");
+};
 
 
