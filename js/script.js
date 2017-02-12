@@ -11,9 +11,8 @@ var numberOfFields = 80;
 var currentLanguage = "pl";
 var numberOfPlayers = 2;
 var maxNumberOfPlayers = 8;
-
-var gameDiv;
-var menuDiv;
+var currentPlayer = 0;
+var roll;
 
 var board = [];
 var player = [];
@@ -97,7 +96,8 @@ var initButtons = function(){
     document.getElementById("add-player-button").addEventListener('click', addPlayerClickHandler, false);
     document.getElementById("remove-player-button").addEventListener('click', removePlayerClickHandler, false);
     document.getElementById("start-game-button").addEventListener('click', startGameClickHandler, false);
-
+    document.getElementById("roll-button").addEventListener('click', rollClickHandler, false);
+    document.getElementById("task-close-button").addEventListener('click', taskCloseClickHandler, false);
 
 
     var backButton = document.getElementsByClassName("back-button");
@@ -119,7 +119,6 @@ window.onload = function(){
     updateCreatePlayers();
     data.getLanguages();
     displaySection("main-menu");
-
 }
 
 
@@ -172,6 +171,23 @@ var initGame = function(){
     div.appendChild(a);
     document.getElementById("game-board").appendChild(div);
 
+    //put players at start
+    for (i=0; i<maxNumberOfPlayers; i++)
+    {
+        document.getElementsByClassName("start-tile")[0].appendChild(player[i].icon);
+        player[i].icon.innerHTML = player[i].name;
+
+        if (i<numberOfPlayers)
+            player[i].icon.style.display="block";
+        else
+            player[i].icon.style.display="none";
+    }
+
+
+
+    document.getElementById("current-player").innerHTML = "Teraz rzuca "+player[currentPlayer].name;
+
+
 
     console.log(board);
 
@@ -181,7 +197,6 @@ var initGame = function(){
 
 
 var newGameButtonClickHandler = function(){
-    initGame();
     displaySection("create-players");
 };
 
@@ -190,9 +205,14 @@ var initPlayers = function(){
     var container = document.getElementById("players-container");
     for (i=0; i<maxNumberOfPlayers; i++)
     {
+
+
         player[i] = new Object();
         player[i].name = "Gracz "+(i+1);
+        player[i].position = 0; // start tile
 
+
+        //CREATE PLAYERS SUBMENU
         div = document.createElement("div");
         input = document.createElement("input");
         input.type = "text";
@@ -200,7 +220,17 @@ var initPlayers = function(){
         div.appendChild(input);
         div.className+="div-add-player";
         container.appendChild(div);
+
+        //PLAYERS ON GAME-BOARD
+
+        player[i].icon = document.createElement("div");
+        player[i].icon.className+="player-icon";
     }
+
+
+
+
+
 }
 
 
@@ -216,10 +246,7 @@ var displaySection = function(id){
 
 
 
-var backButtonClickHandler = function(){
-    displaySection("main-menu");
 
-};
 
 
 var updateCreatePlayers = function(){
@@ -243,6 +270,21 @@ var updateCreatePlayers = function(){
 
 
 
+var updateGame = function(){
+    currentPlayer = (currentPlayer++ +1)%numberOfPlayers;
+    document.getElementById("current-player").innerHTML = "Teraz rzuca "+player[currentPlayer].name;
+}
+
+
+
+var move = function(player, field){
+    document.getElementById("game-board").children[field].appendChild(player.icon);
+}
+
+
+
+
+
 var addPlayerClickHandler = function(){
     if (numberOfPlayers>=maxNumberOfPlayers) return;
     console.log("add player");
@@ -259,7 +301,54 @@ var removePlayerClickHandler = function(){
 
 
 var startGameClickHandler = function(){
+    initGame();
     displaySection("game");
+};
+
+var backButtonClickHandler = function(){
+    displaySection("main-menu");
+
+};
+
+var rollClickHandler = function(){
+    roll = Math.floor(Math.random()*6)+1;
+    console.log("roll: "+roll);
+    
+    player[currentPlayer].position += roll;
+
+
+    move(player[currentPlayer], player[currentPlayer].position);
+    document.getElementById("task-text").innerHTML = board[player[currentPlayer].position].task.task;
+
+
+    var string = player[currentPlayer].name+" wyrzucił "+roll;
+    switch(roll){
+        case 1:
+            string+=" oczko.";
+            break;
+        case 2:
+        case 3:
+        case 4:
+            string+=" oczka.";
+            break;
+        case 5:
+        case 6:
+            string+=" oczek!";
+    }
+
+
+
+    document.getElementById("roll-result").innerHTML = string;
+    document.getElementById("move-result").innerHTML = player[currentPlayer].name+" przechodzi na pole o numerze "+player[currentPlayer].position;
+    
+    
+    document.getElementById("task-window").style.display = "block";
+
+};
+
+var taskCloseClickHandler = function(){
+    document.getElementById("task-window").style.display = "none";
+    updateGame();
 };
 
 
