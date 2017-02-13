@@ -18,15 +18,50 @@
     <button id="new-game-button">
         Nowa gra
     </button>
-    <button>
+    <button >
         Kontynuuj
     </button>
-    <button>
+    <button id="config-button">
         Ustawienia
     </button>
 
-    <button>
+    <button id="authors-button">
         Autorzy
+    </button>
+</div>
+
+<!--         CONFIG ------------------------------------------------------->
+
+<div id="config">
+
+    <h2>Ilość pól: </h2><input id="field-input" value="80">
+
+
+
+    <button class="back-button">
+        wyjdź
+    </button>
+
+</div>
+
+
+<!--         AUTHORS ------------------------------------------------------->
+
+<div id="authors">
+
+    <h2>Front-end: </h2>
+    <h2><small>Mateusz Dobrowolski</small></h2>
+    <h2>Back-end: </h2>
+    <h2><small>Paweł Jankowiak</small></h2>
+    <h2>Android: </h2>
+    <h2><small>Kolega Pawła</small></h2>
+    <h2>Tłumaczenia:</h2>
+    <h2><small>ktośtam</small></h2>
+    <h2><small>ktośtam 2</small></h2>
+    <h2><small>ktośtam 3</small></h2>
+
+    <button class="back-button">
+        wyjdź
     </button>
 </div>
 
@@ -78,8 +113,9 @@
 <div id="task-window">
     <div>
         <h3 id="roll-result"></h3>
-        <h3 id="move-result"></h3>
         <h4 id="task-text"></h4>
+        <h3 id="move-result"></h3>
+
         <button id="task-close-button">ok</button>
     </div>
 </div>
@@ -88,5 +124,6 @@
 
 
 <script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/submenus.js"></script>
 </body>
 </html>

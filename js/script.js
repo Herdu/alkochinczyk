@@ -2,12 +2,23 @@
  * Created by Mati on 2017-02-11.
  */
 
+/**
+ * https://bitbucket.org/Agred/alcoludo
+
+ https://play.google.com/store/apps/details?id=com.agred.alcoludo
+ branch master to android. PHP to PHP, czyli część serwerowa xD
+ i nasz backend
+
+ http://alcoludo.elektrokom.com.pl/login
+ */
+
+
 
 /* api url:
  http://alcoludo.elektrokom.com.pl/api/v1/get-available-languages
  http://alcoludo.elektrokom.com.pl/api/v1/get-tasks-with-translations
  */
-var numberOfFields = 80;
+var numberOfFields = 50;
 var currentLanguage = "pl";
 var numberOfPlayers = 2;
 var maxNumberOfPlayers = 8;
@@ -30,7 +41,12 @@ var color = [
 
 
 
+player.goBack = function( num ){
+    this.position -= num;
+    if (this.position  <0) this.position  = 0;
+    move(this, this.position);
 
+}
 
 
 
@@ -98,7 +114,8 @@ var initButtons = function(){
     document.getElementById("start-game-button").addEventListener('click', startGameClickHandler, false);
     document.getElementById("roll-button").addEventListener('click', rollClickHandler, false);
     document.getElementById("task-close-button").addEventListener('click', taskCloseClickHandler, false);
-
+    document.getElementById("config-button").addEventListener('click', configClickHandler, false);
+    document.getElementById("authors-button").addEventListener('click', authorsClickHandler, false);
 
     var backButton = document.getElementsByClassName("back-button");
     for (i=0; i<backButton.length; i++)
@@ -126,6 +143,20 @@ window.onload = function(){
 
 var initGame = function(){
 
+    //give players their names:
+
+    for (i=0; i<player.length; i++)
+    {
+        var string = document.getElementById("Gracz "+(i+1)).value;
+        if (string!== "")
+            player[i].name = string;
+
+    }
+
+
+
+
+
     //clear board from previous game:
 
     var myNode = document.getElementById("game-board");
@@ -141,6 +172,16 @@ var initGame = function(){
     a.text = "start";
     div.appendChild(a);
     document.getElementById("game-board").appendChild(div);
+
+
+    //get number of fields from settings
+
+    var temp = document.getElementById("field-input").value;
+    if (isNaN(Number(temp)))
+        numberOfFields = 50;
+    else
+        numberOfFields = Math.floor(Number(temp));
+
 
 
     for (i=0; i<numberOfFields; i++)
@@ -217,6 +258,7 @@ var initPlayers = function(){
         input = document.createElement("input");
         input.type = "text";
         input.defaultValue = "Gracz "+(i+1);
+        input.id = input.defaultValue;
         div.appendChild(input);
         div.className+="div-add-player";
         container.appendChild(div);
@@ -310,15 +352,25 @@ var backButtonClickHandler = function(){
 
 };
 
+
+
 var rollClickHandler = function(){
     roll = Math.floor(Math.random()*6)+1;
     console.log("roll: "+roll);
     
     player[currentPlayer].position += roll;
-
+    document.getElementById("task-text").innerHTML ="#"+player[currentPlayer].position +":  "+board[player[currentPlayer].position].task.task;
 
     move(player[currentPlayer], player[currentPlayer].position);
-    document.getElementById("task-text").innerHTML = board[player[currentPlayer].position].task.task;
+
+
+    var actionData  = board[player[currentPlayer].position].task.actionData;
+    var actionId = board[player[currentPlayer].position].task.actionId;
+    if (actionId != null)
+        doSpecialTask(actionId,actionData);
+
+
+
 
 
     var string = player[currentPlayer].name+" wyrzucił "+roll;
@@ -351,4 +403,51 @@ var taskCloseClickHandler = function(){
     updateGame();
 };
 
+
+
+var doSpecialTask = function(actionId, actionData){
+
+    console.log("special task: "+actionId+"  "+actionData);
+    switch(actionId)
+    {
+        case "goTo":
+            var field;
+            if (actionData === "start") field=0;
+            else
+                field = Number(actionData);
+
+            move(player[currentPlayer],field);
+            player[currentPlayer].position = field;
+            break;
+
+
+
+
+        case "everyoneGoBack":
+            for (i=0; i<player.length; i++)
+                player.goBack(1);
+            break;
+
+        case "goBack":
+            player[currentPlayer].goBack(Number(actionData));
+            break;
+
+        case "timer":
+            //TODO
+            break;
+        case "chooseGoTo":
+            //TODO
+            break;
+        case "passTurn":
+            //TODO
+            break;
+
+        // and about 4 more cases TODO
+
+
+
+    };
+
+
+}
 
