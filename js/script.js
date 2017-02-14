@@ -30,13 +30,15 @@ var player = [];
 var data = {};
 
 
-var color = [
+var customColor = [
     "red",
     "yellow",
     "blue",
     "green",
     "aqua",
-    "blueviolet"
+    "blueviolet",
+    "brown",
+    "orange"
 ]
 
 
@@ -143,11 +145,11 @@ window.onload = function(){
 
 var initGame = function(){
 
-    //give players their names:
+    //give players their names and colors :
 
     for (i=0; i<player.length; i++)
     {
-        var string = document.getElementById("Gracz "+(i+1)).value;
+        var string = document.getElementById("player-"+(i+1)).value;
         if (string!== "")
             player[i].name = string;
 
@@ -244,6 +246,7 @@ var newGameButtonClickHandler = function(){
 
 var initPlayers = function(){
     var container = document.getElementById("players-container");
+    
     for (i=0; i<maxNumberOfPlayers; i++)
     {
 
@@ -258,8 +261,17 @@ var initPlayers = function(){
         input = document.createElement("input");
         input.type = "text";
         input.defaultValue = "Gracz "+(i+1);
-        input.id = input.defaultValue;
+        input.id = "player-"+(i+1);
+
+
+        var color = document.createElement("div");
+        color.id = "player-"+(i+1)+"-color";
+        color.className+="player-color";
+
+        color.style.backgroundColor = customColor[i];
+
         div.appendChild(input);
+        div.appendChild(color);
         div.className+="div-add-player";
         container.appendChild(div);
 
@@ -304,7 +316,7 @@ var updateCreatePlayers = function(){
 
     }
 
-    document.getElementById("number-of-players-text").innerHTML = numberOfPlayers;
+
 
     
 }
@@ -355,6 +367,7 @@ var backButtonClickHandler = function(){
 
 
 var rollClickHandler = function(){
+
     roll = Math.floor(Math.random()*6)+1;
     console.log("roll: "+roll);
     

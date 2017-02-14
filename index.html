@@ -5,6 +5,8 @@
     <title>AlkoChińczyk</title>
 
 
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
     <link rel="stylesheet" type="text/css" href="style/style.css">
@@ -15,17 +17,17 @@
 <!--         MAIN MENU ------------------------------------------------------->
 
 <div id="main-menu">
-    <button id="new-game-button">
+    <button id="new-game-button" class="menu-button">
         Nowa gra
     </button>
-    <button >
+    <button id ="continue-button" class="menu-button">
         Kontynuuj
     </button>
-    <button id="config-button">
+    <button id="config-button" class="menu-button">
         Ustawienia
     </button>
 
-    <button id="authors-button">
+    <button id="authors-button" class="menu-button">
         Autorzy
     </button>
 </div>
@@ -38,7 +40,7 @@
 
 
 
-    <button class="back-button">
+    <button class="back-button menu-button">
         wyjdź
     </button>
 
@@ -60,7 +62,7 @@
     <h2><small>ktośtam 2</small></h2>
     <h2><small>ktośtam 3</small></h2>
 
-    <button class="back-button">
+    <button class="back-button menu-button">
         wyjdź
     </button>
 </div>
@@ -69,18 +71,21 @@
 <!--         PRE-GAME ------------------------------------------------------->
 
 <div id="create-players">
-    <div id="number-of-players">
-        <button id="add-player-button">Zwiększ</button>
-        <h3 id="number-of-players-text"></h3>
-        <button id="remove-player-button">Zmniejsz</button>
-    </div>
-    <button id="start-game-button">
+
+
+    <button id="start-game-button" class="menu-button">
         Graj!
     </button>
-    <button class="back-button">
+    <button class="back-button menu-button">
         wyjdź
     </button>
+
+    <i class="fa fa-plus-square noselect" id="add-player-button"  aria-hidden="true"></i>
+    <i class="fa fa-minus-square noselect" id="remove-player-button" aria-hidden="true"></i>
+
     <div id="players-container"></div>
+
+
 
 </div>
 

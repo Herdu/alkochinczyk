@@ -1,9 +1,38 @@
 body{
     background-color: #f7f7f7;
+    background: url('../resources/Sports.png'); /**made by Ries van Geffen https://www.toptal.com/designers/subtlepatterns/sports/ **/
     text-align: center;
     margin: 0;
     padding: 0;
     height: 100%;
+    outline-style:none;
+}
+
+#main-menu,#config, #create-players{
+    padding-top: 100px;
+}
+
+.menu-button{
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 70px;
+    font-size: 24px;
+    background-color: #2a3f54;
+    display: block;
+    color: white;
+    font-weight: bold;
+    border: none;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+button:hover{
+    cursor: pointer;
+}
+
+input{
+    height: 30px;
+    width: 300px;
 }
 
 #config, #authors{
@@ -35,20 +64,75 @@ body{
     display: none;
     background-color: white;
     font-size: 8px;
-
-
 }
 
-#number-of-players{
-    background-color: blue;
-    color: white;
-    width: 100px;
-    height: 100px;
+#add-player-button,#remove-player-button{
+    font-size: 70px;
+    margin-left: 20px;
+    margin-right: 20px;
+    outline-style:none;
+    border-radius: 0px;
 }
+
+
+#add-player-button:hover,#remove-player-button:hover{
+    cursor: pointer;
+}
+
+
+#add-player-button{
+    color: #02ff00;
+}
+#remove-player-button{
+    color: red;
+}
+
 
 .div-add-player{
     display: none;
 }
+
+
+#players-container>div{
+    width: 300px;
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    position: relative;
+}
+#players-container>div>input{
+    height: 30px;
+    border: none;
+    width: 200px;
+    float: left;
+    display: inline-block;
+}
+
+.player-color{
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    background-color: pink;
+
+}
+
+
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+
+
+
+
 
 #game{
     margin-bottom: 100px;
@@ -77,3 +161,4 @@ body{
     background-color: #2a3f54;
     color: white;
 }
+
