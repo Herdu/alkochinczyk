@@ -353,8 +353,6 @@ var updateCreatePlayers = function(){
 
 var updateGame = function(){
     currentPlayer = (currentPlayer++ +1)%numberOfPlayers;
-    document.getElementById("current-player").innerHTML = player[currentPlayer].name;
-
 }
 
 
@@ -444,7 +442,9 @@ var rollClickHandler = function(){
 };
 
 var taskCloseClickHandler = function(){
+
     document.getElementById("task-window").style.display = "none";
+    document.getElementById("current-player").innerHTML = player[currentPlayer].name;
 };
 
 
