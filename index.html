@@ -30,6 +30,10 @@
     <button id="authors-button" class="menu-button">
         Autorzy
     </button>
+
+
+
+
 </div>
 
 <!--         CONFIG ------------------------------------------------------->
@@ -56,11 +60,13 @@
     <h2>Back-end: </h2>
     <h2><small>Paweł Jankowiak</small></h2>
     <h2>Android: </h2>
-    <h2><small>Kolega Pawła</small></h2>
+    <h2><small>Agred</small></h2>
+    <!--
     <h2>Tłumaczenia:</h2>
     <h2><small>ktośtam</small></h2>
     <h2><small>ktośtam 2</small></h2>
     <h2><small>ktośtam 3</small></h2>
+    -->
 
     <button class="back-button menu-button">
         wyjdź
@@ -80,8 +86,8 @@
         wyjdź
     </button>
 
-    <i class="fa fa-plus-square noselect" id="add-player-button"  aria-hidden="true"></i>
-    <i class="fa fa-minus-square noselect" id="remove-player-button" aria-hidden="true"></i>
+    <i class="fa fa-plus-square noselect custom-button" id="add-player-button"  aria-hidden="true"></i>
+    <i class="fa fa-minus-square noselect custom-button" id="remove-player-button" aria-hidden="true"></i>
 
     <div id="players-container"></div>
 
@@ -95,12 +101,19 @@
 <div id="game">
 
     <div id="game-header">
-        <p id="current-player"></p>
-        <button id="roll-button">rzut kostką</button>
+         <div id="button-container">
+             <div id="white-bg">
+                 <i class="fa fa-window-close noselect" id="exit-button" aria-hidden="true"></i>
+             </div>
+         </div>
+    </div>
 
-        <button class="back-button">
-            Zakończ grę
-        </button>
+    <div id="game-footer">
+        <p id="current-player"></p>
+        <img id="roll-button" src="https://openclipart.org/image/100px/svg_to_png/189685/1387954956.png&disposition=attachment" alt="Single Die" title="Single Die by  casino ( https://openclipart.org/user-detail/casino )" />
+
+
+
     </div>
 
 
@@ -117,11 +130,11 @@
 
 <div id="task-window">
     <div>
-        <h3 id="roll-result"></h3>
+        <img id="dice">
         <h4 id="task-text"></h4>
         <h3 id="move-result"></h3>
 
-        <button id="task-close-button">ok</button>
+        <button class="menu-button" id="task-close-button" >ok</button>
     </div>
 </div>
 

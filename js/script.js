@@ -23,30 +23,31 @@ var currentLanguage = "pl";
 var numberOfPlayers = 2;
 var maxNumberOfPlayers = 8;
 var currentPlayer = 0;
-var roll;
+var roll = 0;
 
 var board = [];
 var player = [];
 var data = {};
 
 
+
 var customColor = [
-    "red",
-    "yellow",
-    "blue",
-    "green",
-    "aqua",
-    "blueviolet",
-    "brown",
-    "orange"
+    "15d33e", //green
+    "0012cb", //blue
+    "e88c29", //orange
+    "c529b1", //purple
+    "ff001b", //red
+    "ccda1f", //yellow
+    "69e6b0", //aqua
+    "7c3600"  //brown
 ]
 
 
 
-player.goBack = function( num ){
-    this.position -= num;
-    if (this.position  <0) this.position  = 0;
-    move(this, this.position);
+var goBack = function(player, num ){
+    player.position -= num;
+    if (player.position  <0) player.position  = 0;
+    move(player, player.position);
 
 }
 
@@ -118,6 +119,7 @@ var initButtons = function(){
     document.getElementById("task-close-button").addEventListener('click', taskCloseClickHandler, false);
     document.getElementById("config-button").addEventListener('click', configClickHandler, false);
     document.getElementById("authors-button").addEventListener('click', authorsClickHandler, false);
+    document.getElementById("exit-button").addEventListener('click', backButtonClickHandler, false);
 
     var backButton = document.getElementsByClassName("back-button");
     for (i=0; i<backButton.length; i++)
@@ -133,6 +135,11 @@ var initButtons = function(){
 
 
 window.onload = function(){
+
+    if (detectMob())
+        console.log("mobile");
+
+
     initButtons();
     initPlayers();
     updateCreatePlayers();
@@ -145,6 +152,10 @@ window.onload = function(){
 
 var initGame = function(){
 
+
+
+
+
     //give players their names and colors :
 
     for (i=0; i<player.length; i++)
@@ -153,18 +164,25 @@ var initGame = function(){
         if (string!== "")
             player[i].name = string;
 
+        player[i].icon.style.backgroundColor = document.getElementById("player-"+(i+1)+"-color").style.backgroundColor;
+        player[i].icon.style.color = document.getElementById("player-"+(i+1)+"-color").style.color;
+
+
+
     }
 
 
-
-
-
-    //clear board from previous game:
+    //clear data from previous game:
 
     var myNode = document.getElementById("game-board");
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
     };
+
+    for (i=0; i<player.length; i++)
+    {
+        player[i].position = 0;
+    }
 
 
     //Start tile
@@ -197,7 +215,7 @@ var initGame = function(){
         tile.div = document.createElement("div");
         document.getElementById("game-board").appendChild(tile.div);
         var a = document.createElement("a");
-        a.text = "nr "+(i+1);
+        a.text = "#"+(i+1);
         tile.div.appendChild(a);
 
         tile.div.className+="tile";
@@ -228,7 +246,7 @@ var initGame = function(){
 
 
 
-    document.getElementById("current-player").innerHTML = "Teraz rzuca "+player[currentPlayer].name;
+    document.getElementById("current-player").innerHTML = player[currentPlayer].name;
 
 
 
@@ -264,14 +282,20 @@ var initPlayers = function(){
         input.id = "player-"+(i+1);
 
 
-        var color = document.createElement("div");
-        color.id = "player-"+(i+1)+"-color";
-        color.className+="player-color";
 
-        color.style.backgroundColor = customColor[i];
+
+        var colorButton = document.createElement("button");
+        colorButton.className = "player-color jscolor {valueElement:null,value:'"+customColor[i]+"'}";
+        colorButton.id = "player-"+(i+1)+"-color";
+
+
+        //addEventListener('onFineChange', updateColor(i), false);
+
+        colorButton.style.backgroundColor = customColor[i];
+        div.appendChild(colorButton);
+
 
         div.appendChild(input);
-        div.appendChild(color);
         div.className+="div-add-player";
         container.appendChild(div);
 
@@ -283,7 +307,10 @@ var initPlayers = function(){
 
 
 
-
+    // add script dynamically
+    var my_awesome_script = document.createElement('script');
+    my_awesome_script.setAttribute('src','js/jscolor.js');
+    document.head.appendChild(my_awesome_script);
 
 }
 
@@ -326,7 +353,8 @@ var updateCreatePlayers = function(){
 
 var updateGame = function(){
     currentPlayer = (currentPlayer++ +1)%numberOfPlayers;
-    document.getElementById("current-player").innerHTML = "Teraz rzuca "+player[currentPlayer].name;
+    document.getElementById("current-player").innerHTML = player[currentPlayer].name;
+
 }
 
 
@@ -335,6 +363,12 @@ var move = function(player, field){
     document.getElementById("game-board").children[field].appendChild(player.icon);
 }
 
+
+
+
+var findPlayer = function(actionData){
+
+}
 
 
 
@@ -377,6 +411,7 @@ var rollClickHandler = function(){
     move(player[currentPlayer], player[currentPlayer].position);
 
 
+
     var actionData  = board[player[currentPlayer].position].task.actionData;
     var actionId = board[player[currentPlayer].position].task.actionId;
     if (actionId != null)
@@ -385,35 +420,31 @@ var rollClickHandler = function(){
 
 
 
+    //color fields
 
-    var string = player[currentPlayer].name+" wyrzucił "+roll;
-    switch(roll){
-        case 1:
-            string+=" oczko.";
-            break;
-        case 2:
-        case 3:
-        case 4:
-            string+=" oczka.";
-            break;
-        case 5:
-        case 6:
-            string+=" oczek!";
+    var children =  document.getElementById("game-board").children;
+    for (i=1; i<=numberOfFields; i++)
+    {
+        if (children[i].children.length < 2)
+            children[i].style.backgroundColor = "white";
+        else
+            children[i].style.backgroundColor = "#fff8b7";
+
     }
 
 
 
-    document.getElementById("roll-result").innerHTML = string;
-    document.getElementById("move-result").innerHTML = player[currentPlayer].name+" przechodzi na pole o numerze "+player[currentPlayer].position;
-    
-    
+
+    document.getElementById("dice").src = "resources/"+roll+"dice.png";
+    //document.getElementById("move-result").innerHTML = player[currentPlayer].name+" przechodzi na pole o numerze "+player[currentPlayer].position;
+
+    updateGame();
     document.getElementById("task-window").style.display = "block";
 
 };
 
 var taskCloseClickHandler = function(){
     document.getElementById("task-window").style.display = "none";
-    updateGame();
 };
 
 
@@ -438,11 +469,12 @@ var doSpecialTask = function(actionId, actionData){
 
         case "everyoneGoBack":
             for (i=0; i<player.length; i++)
-                player.goBack(1);
+                goBack(player[i],1);
+
             break;
 
         case "goBack":
-            player[currentPlayer].goBack(Number(actionData));
+            goBack(player[currentPlayer],Number(actionData));
             break;
 
         case "timer":
@@ -455,7 +487,9 @@ var doSpecialTask = function(actionId, actionData){
             //TODO
             break;
 
-        // and about 4 more cases TODO
+        case "findPlayer":
+                findPlayer(actionData);
+            break;
 
 
 
@@ -463,4 +497,41 @@ var doSpecialTask = function(actionId, actionData){
 
 
 }
+
+
+
+
+function detectMob() {
+    if( navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+    ){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

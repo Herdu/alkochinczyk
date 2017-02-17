@@ -8,6 +8,8 @@ body{
     outline-style:none;
 }
 
+
+
 #main-menu,#config, #create-players{
     padding-top: 100px;
 }
@@ -26,8 +28,57 @@ body{
     margin-bottom: 2px;
     margin-top: 2px;
 }
-button:hover{
+button:hover,#back-button:hover,#roll-button:hover, #exit-button:hover{
     cursor: pointer;
+}
+
+
+
+
+/* =================== EXIT BUTTON */
+#button-container{
+    position: relative;
+    width: 50px !important;
+    max-width: 50px;
+    margin-right: 10px;
+    margin-left: auto;
+}
+#exit-button{
+    font-size: 50px;
+    color: red;
+    position: relative;
+    top: -10px;
+    left: -10px;
+}
+
+#white-bg{
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: 10px;
+    left: 10px;
+    background-color: white;
+}
+/* =================== EXIT BUTTON END */
+
+#roll-button{
+    display: inline-block;
+    position: relative;
+    top: 20px;
+    margin-left: 20px;
+}
+#roll-button:hover {
+    -webkit-animation-name: shake;
+    animation-name: shake;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+}
+
+
+
+#current-player{
+    display: inline-block;
+    font-size: 25px;
 }
 
 input{
@@ -43,14 +94,16 @@ input{
 
 .tile{
     min-width: 100px;
-    min-height: 100px;
+    min-height: 120px;
     width: 100px;
-    height: 100px;
+    height: 120px;
     max-width: 100px;
-    max-height: 100px;
+    max-height: 120px;
     background-color: #ededed;
-    margin: 10px;
+    margin: 1px;
     display: inline-block;
+    text-align: center;
+    vertical-align:top;
 }
 .start-tile{
      background-color: #b0ffad;
@@ -63,10 +116,11 @@ input{
     margin: 0;
     display: none;
     background-color: white;
-    font-size: 8px;
+    font-size: 10px;
+    border-radius: 5px;
 }
 
-#add-player-button,#remove-player-button{
+.custom-button{
     font-size: 70px;
     margin-left: 20px;
     margin-right: 20px;
@@ -87,6 +141,13 @@ input{
     color: red;
 }
 
+
+#task-close-button{
+    background-color: white;
+    color: #2a3f54;
+    margin: 10px auto 30px auto;
+
+}
 
 .div-add-player{
     display: none;
@@ -130,22 +191,35 @@ input{
 }
 
 
-
+#dice{
+    margin: 20px;
+}
 
 
 
 #game{
     margin-bottom: 100px;
+    margin-top: 50px;
 }
 
-#game-header{
+#game-footer,#game-header{
     width: 100%;
-    height: 100px;
     background-color: #2a3f54;
     position: fixed;
-    bottom: 0px;
     color: white;
 }
+
+#game-footer{
+    height: 100px;
+    bottom: 0px;
+
+}
+#game-header {
+    height: 50px;
+    top: 0px;
+    text-align: right;
+}
+
 
 #task-window{
     position: fixed;
@@ -160,5 +234,42 @@ input{
     margin: 10%;
     background-color: #2a3f54;
     color: white;
+    padding: 20px;
 }
 
+
+
+
+@-webkit-keyframes shake {
+    from, to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    10%, 30%, 50%, 70%, 90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+    }
+
+    20%, 40%, 60%, 80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+    }
+}
+
+@keyframes shake {
+    from, to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    10%, 30%, 50%, 70%, 90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+    }
+
+    20%, 40%, 60%, 80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+    }
+}
