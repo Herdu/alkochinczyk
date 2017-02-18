@@ -17,13 +17,16 @@
 <!--         MAIN MENU ------------------------------------------------------->
 
 <div id="main-menu">
+
+        <div id="languages">
+            <!-- icons come from https://www.iconfinder.com/iconsets/142-mini-country-flags-16x16px -->
+        </div>
+
+
     <button id="new-game-button" class="menu-button">
         Nowa gra
     </button>
-    <button id ="continue-button" class="menu-button">
-        Kontynuuj
-    </button>
-    <button id="config-button" class="menu-button">
+    <button id="settings-button" class="menu-button">
         Ustawienia
     </button>
 
@@ -34,13 +37,15 @@
 
 
 
+
+
 </div>
 
-<!--         CONFIG ------------------------------------------------------->
+<!--         SETTINGS ------------------------------------------------------->
 
-<div id="config">
+<div id="settings">
 
-    <h2>Ilość pól: </h2><input id="field-input" value="80">
+    <h2 id="number-of-field-label">Ilość pól: </h2><input id="field-input" value="80"  type="text" pattern="\d*">
 
 
 
@@ -60,7 +65,17 @@
     <h2>Back-end: </h2>
     <h2><small>Paweł Jankowiak</small></h2>
     <h2>Android: </h2>
-    <h2><small>Agred</small></h2>
+    <h2><small>
+        <a target="_blank" href="https://play.google.com/store/apps/details?id=com.agred.alcoludo"><img src="resources/googlePlay.png" id="google-play"></a>
+        Agred
+    </small></h2>
+    <h2 id="translators-label">Tłumaczenia:</h2>
+    <h2><small>
+        <img src="resources/de.png" class="translator-icon">Rycoon
+    </small></h2>
+    <h2><small>
+        <img src="resources/ru.png" class="translator-icon"><img src="resources/uk.png" class="translator-icon">Yevheniia Tsapkova
+    </small></h2>
     <!--
     <h2>Tłumaczenia:</h2>
     <h2><small>ktośtam</small></h2>
@@ -101,7 +116,14 @@
 <div id="game">
 
     <div id="game-header">
-         <div id="button-container">
+
+        <div id="timer-container">
+
+        </div>
+
+
+
+        <div id="button-container">
              <div id="white-bg">
                  <i class="fa fa-window-close noselect" id="exit-button" aria-hidden="true"></i>
              </div>
@@ -109,6 +131,8 @@
     </div>
 
     <div id="game-footer">
+
+
         <p id="current-player"></p>
         <img id="roll-button" src="https://openclipart.org/image/100px/svg_to_png/189685/1387954956.png&disposition=attachment" alt="Single Die" title="Single Die by  casino ( https://openclipart.org/user-detail/casino )" />
 
@@ -134,6 +158,11 @@
         <h4 id="task-text"></h4>
         <h3 id="move-result"></h3>
 
+        <div id="choose-player">
+
+        </div>
+
+
         <button class="menu-button" id="task-close-button" >ok</button>
     </div>
 </div>
@@ -141,7 +170,27 @@
 
 
 
+<!--        END OF GAME ------------------------------------------------------->
+
+<div id="end-of-game">
+
+    <img src="resources/cup.jpg" id="cup">
+    <h1 id="winner">
+
+    </h1>
+
+    <button class="back-button menu-button">wyjdź</button>
+
+</div>
+
+
+
+
+
+
+
+
 <script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/submenus.js"></script>
+<script type="text/javascript" src="js/translate.js"></script>
 </body>
 </html>
