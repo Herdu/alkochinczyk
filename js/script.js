@@ -56,6 +56,11 @@ var goBack = function(player, num ){
 }
 
 
+data.getDataFromFile = function(){
+    data.languages = JSON.parse(languagesJSON);
+    data.tasks = JSON.parse(tasksJSON);
+    splitTasksByLanguage(data.tasks);
+}
 
 
 
@@ -78,6 +83,7 @@ data.getTasks = function(){
         if (r.readyState != 4 || r.status != 200) return;
         var tasks = JSON.parse(r.response);
         console.log(tasks);
+        console.log(JSON.stringify(tasks));
         splitTasksByLanguage(tasks);
     };
     r.send(null);
@@ -166,7 +172,8 @@ window.onload = function(){
     initButtons();
     initPlayers();
     updateCreatePlayers();
-    data.getLanguages();
+    data.getDataFromFile();
+    //data.getLanguages();
     displaySection("main-menu");
 }
 
@@ -848,6 +855,13 @@ var setTimer = function(player, time){
     }, minutes*60*1000);
 
 }
+
+
+
+
+
+
+
 
 
 
