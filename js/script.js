@@ -548,6 +548,15 @@ var findPlayer = function(actionData){
 }
 
 
+var displayDice = function(roll){
+    var dice = document.getElementsByClassName("dice");
+    for (i=0; i<dice.length; i++)
+        dice[i].style.display = "none";
+
+    document.getElementById(roll+"dice").style.display = "block";
+
+}
+
 
 
 var addPlayerClickHandler = function(){
@@ -611,8 +620,9 @@ var rollClickHandler = function(){
 
 
 
+    displayDice(roll);
 
-    document.getElementById("dice").src = "resources/"+roll+"dice.png";
+
     //document.getElementById("move-result").innerHTML = player[currentPlayer].name+" przechodzi na pole o numerze "+player[currentPlayer].position;
 
     updateGame();
