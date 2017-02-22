@@ -165,10 +165,6 @@ var initButtons = function(){
 
 window.onload = function(){
 
-    if (detectMob())
-        console.log("mobile");
-
-
     initButtons();
     initPlayers();
     updateCreatePlayers();

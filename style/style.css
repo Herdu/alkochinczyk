@@ -12,6 +12,9 @@ body{
     margin-bottom: 60px;
 }
 
+#main-menu,#settings,#authors,#create-players,#game,#task-window,#end-of-game{
+    display: none;
+}
 
 #main-menu,#settings, #create-players{
     padding-top: 100px;
